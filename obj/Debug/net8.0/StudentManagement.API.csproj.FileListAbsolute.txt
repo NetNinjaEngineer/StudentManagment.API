@@ -136,3 +136,4 @@ C:\Users\Mohamed ElHelaly\source\repos\StudentManagement.API\StudentManagement.A
 C:\Users\Mohamed ElHelaly\source\repos\StudentManagement.API\StudentManagement.API\obj\Debug\net8.0\ref\StudentManagement.API.dll
 C:\Users\Mohamed ElHelaly\source\repos\StudentManagement.API\StudentManagement.API\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\Mohamed ElHelaly\source\repos\StudentManagement.API\StudentManagement.API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Mohamed ElHelaly\source\repos\StudentManagement.API\StudentManagement.API\obj\Debug\net8.0\StudentManagement.API.sourcelink.json

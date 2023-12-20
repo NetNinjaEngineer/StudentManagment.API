@@ -89,6 +89,10 @@ public class FeaturesController(IFeatureService featureService, IMapper mapper) 
     public async Task<IActionResult> CalculateTotalGPAFor(int studentId)
     {
         var totalGPA = await _featureService.CalculateTotalGPA(studentId);
+
+        if (totalGPA == 0.0m)
+            return BadRequest("GPA is Un available");
+
         return Ok(totalGPA);
     }
 
