@@ -1,0 +1,141 @@
+[
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "UpdateEnrollementAsync",
+    "RelativePath": "api/Features/{studentId}/{courseId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "StudentManagement.API.Dtos.EnrollementDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "CalculateTotalGPAFor",
+    "RelativePath": "api/Features/CalculateTotalGPAFor",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "EnrollCourseToStudent",
+    "RelativePath": "api/Features/EnrollCourseToStudent",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "GetCoursesWithDepartments",
+    "RelativePath": "api/Features/GetCoursesWithDepartments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "GetCoursesWithDepartmentsAndPreRequests",
+    "RelativePath": "api/Features/GetCoursesWithDepartmentsAndPreRequests",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "GetCoursesWithPreRequests",
+    "RelativePath": "api/Features/GetCoursesWithPreRequests",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "GetStudentsWithCoursesRegistered",
+    "RelativePath": "api/Features/GetStudentsWithCoursesRegistered",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "SuggestCoursesAsync",
+    "RelativePath": "api/Features/SuggestCourses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[StudentManagement.API.WeatherForecast, StudentManagement.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]
