@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using StudentManagement.API.Data;
 using StudentManagement.API.Dtos;
+using StudentManagement.API.Entities;
 using StudentManagement.API.Services.Contracts;
 
 namespace StudentManagement.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class FeaturesController(IFeatureService featureService, IMapper mapper) : ControllerBase
+public class FeaturesController(IFeatureService featureService,
+    IMapper mapper, ApplicationDbContext context) : ControllerBase
 {
     private readonly IFeatureService _featureService = featureService;
     private readonly IMapper _mapper = mapper;
+    private readonly ApplicationDbContext _context = context;
 
     [Route("GetStudentsWithCoursesRegistered")]
     [HttpGet]
@@ -67,12 +71,11 @@ public class FeaturesController(IFeatureService featureService, IMapper mapper) 
             return BadRequest("Not valid course or student, " +
                 "can not enroll the course, try again !!!");
 
-
         // case2 student does not register course if already register PreRequest course
-        var takenPreCourse = await _featureService.CheckPreRequestCourse(courseId, studentId);
+        var (taken, course) = await _featureService.CheckPreRequestCourse(courseId, studentId);
 
-        if (takenPreCourse == false)
-            return BadRequest($"You must Take PreRequest Course");
+        if (taken == false)
+            return BadRequest($"You must Take {course} Course");
 
         // case3 student already registered course
         var enrolled = await _featureService.CheckCourseHaveBeenEnrolled(courseId, studentId);
@@ -114,9 +117,35 @@ public class FeaturesController(IFeatureService featureService, IMapper mapper) 
     [HttpGet("SuggestCourses")]
     public async Task<IActionResult> SuggestCoursesAsync(int studentId)
     {
-        var (student, suggestedCourses) = await _featureService
+        var (message, suggestedCourses) = await _featureService
              .SuggestCoursesDependOnDepartments(studentId);
 
-        return Ok($"Courses Suggested For {student}: {String.Join(", ", suggestedCourses)}");
+        return Ok($"{message} {string.Join(", ", suggestedCourses)}");
+    }
+
+    [HttpDelete("DeleteStudent/{id}")]
+    public async Task<ActionResult<Student>> DeleteAsync(int id)
+    {
+        var student = await _featureService.GetStudentById(id);
+        if (student is not null)
+        {
+            var deleted = await _featureService.DeleteStudent(id);
+            return Ok(deleted);
+        }
+
+        return BadRequest($"No student founded with id: {id}");
+
+    }
+
+
+    [HttpGet("GetEnrolledCourses")]
+    public async Task<IActionResult> GetEnrolledCoursesFor(int studentId)
+    {
+        var enrolledCourses = await _featureService.GetEnrolledCoursesFor(studentId);
+
+        if (!enrolledCourses.Any())
+            return NotFound($"There is no enrolled courses founded with id: {studentId}");
+
+        return Ok(enrolledCourses);
     }
 }

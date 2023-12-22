@@ -43,6 +43,32 @@
   },
   {
     "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "DeleteAsync",
+    "RelativePath": "api/Features/DeleteStudent/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "StudentManagement.API.Entities.Student",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
     "Method": "EnrollCourseToStudent",
     "RelativePath": "api/Features/EnrollCourseToStudent",
     "HttpMethod": "POST",
@@ -90,6 +116,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentManagement.API.Controllers.FeaturesController",
+    "Method": "GetEnrolledCoursesFor",
+    "RelativePath": "api/Features/GetEnrolledCourses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

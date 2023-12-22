@@ -1,4 +1,5 @@
-﻿using StudentManagement.API.Entities;
+﻿using StudentManagement.API.Dtos;
+using StudentManagement.API.Entities;
 using StudentManagement.API.Helpers;
 
 namespace StudentManagement.API.Services.Contracts;
@@ -18,7 +19,7 @@ public interface IFeatureService
 
     Task<bool> CheckValidIDS(int courseId, int studentId);
 
-    Task<bool> CheckPreRequestCourse(int courseId, int studentId);
+    Task<(bool, string)> CheckPreRequestCourse(int courseId, int studentId);
 
     Task<bool> CheckCourseHaveBeenEnrolled(int courseId, int studentId);
 
@@ -31,4 +32,11 @@ public interface IFeatureService
     Task<Enrollment> GetEnrollmentById(int studentId, int courseId);
 
     Task<(string, IEnumerable<string>)> SuggestCoursesDependOnDepartments(int studentId);
+
+    Task<Student> DeleteStudent(int studentId);
+
+    Task<Student> GetStudentById(int studentId);
+
+    Task<IQueryable<EnrolledCourseDTO>> GetEnrolledCoursesFor(int studentId);
+
 }
