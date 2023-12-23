@@ -39,4 +39,6 @@ public interface IFeatureService
 
     Task<IQueryable<EnrolledCourseDTO>> GetEnrolledCoursesFor(int studentId);
 
+    Task<IEnumerable<Enrollment>> GetEnrollmentsBy(int studentId);
+
 }

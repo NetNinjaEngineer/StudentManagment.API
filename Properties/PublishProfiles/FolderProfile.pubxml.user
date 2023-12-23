@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Publish\StudentManagementAPI</_PublishTargetUrl>
+    <History>True|2023-12-22T21:19:07.8980882Z;True|2023-12-22T20:57:52.2863147+02:00;True|2023-12-22T20:56:50.1777426+02:00;</History>
+    <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server= .\SQLEXPRESS%3b Database= StudentManagementDB%3b TrustServerCertificate= True%3b Integrated Security= SSPI</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

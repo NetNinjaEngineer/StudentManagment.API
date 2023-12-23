@@ -269,6 +269,16 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
         return default!;
     }
 
+    public Task<IEnumerable<Enrollment>> GetEnrollmentsBy(int studentId)
+    {
+        var enrollments = _context.Enrollments.Where(x => x.StudentId == studentId);
+
+        if (enrollments is not null)
+            return Task.FromResult(enrollments.AsEnumerable());
+
+        return Task.FromResult(Enumerable.Empty<Enrollment>());
+    }
+
     public async Task<IQueryable<EnrolledCourseDTO>> GetEnrolledCoursesFor(int studentId)
     {
         var validStudent = await GetStudentById(studentId);
