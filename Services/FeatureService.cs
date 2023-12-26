@@ -51,7 +51,7 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
 
             foreach (var item in query)
             {
-                decimal gradePoint = CalculateRatePoint(item.Mark ?? 0);
+                decimal gradePoint = CalculateRatePoint(item.Mark);
                 totalCreditHours += item.CourseCreditHours;
                 totalGradePoints += gradePoint * item.CourseCreditHours;
             }
@@ -198,21 +198,24 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
         {
             var totalGPA = await CalculateTotalGPA(studentId);
 
-            if (totalGPA >= 1.8m && totalGPA <= 2.5m)
+            if (totalGPA.HasValue)
             {
-                var suggestedCourses = GetSuggestedCourses(studentId);
+                if (totalGPA >= 1.8m && totalGPA <= 2.5m)
+                {
+                    var suggestedCourses = GetSuggestedCourses(studentId);
 
-                return ValueTuple.Create($"{String.Concat(
-                    existStudent.FirstName, ' ', existStudent.LastName)}", suggestedCourses);
+                    return ValueTuple.Create($"Suggested Courses For {string.Concat(existStudent.FirstName, ' ',
+                        existStudent.LastName)}", suggestedCourses);
+                }
+                else if (totalGPA > 2.5m)
+                    return ValueTuple.Create($"GPA for '{string.Concat(existStudent.FirstName, ' ',
+                        existStudent.LastName)}' in safe side", Enumerable.Empty<string>());
+                else
+                    return ValueTuple.Create($"GPA is not in allowed ranges to suggest courses", Enumerable.Empty<string>());
             }
-            else if (totalGPA > 2.5m)
-                return ValueTuple.Create($"GPA for '{string.Concat(existStudent.FirstName, ' ',
-                    existStudent.LastName)}' in safe side", Enumerable.Empty<string>());
-
-            else if (totalGPA == 0.0m)
-                return ValueTuple.Create($"There is no suggested courses yet, GPA is un available", Enumerable.Empty<string>());
             else
-                return ValueTuple.Create($"GPA is not in allowed ranges to suggest courses", Enumerable.Empty<string>());
+                return ValueTuple.Create("There is no suggested courses, GPA is Unavailable", Enumerable.Empty<string>());
+
         }
 
         return ValueTuple.Create($"Student may be not exist or not enrolled", Enumerable.Empty<string>());

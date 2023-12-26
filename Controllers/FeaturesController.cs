@@ -126,7 +126,7 @@ public class FeaturesController(IFeatureService featureService,
         var (message, suggestedCourses) = await _featureService
              .SuggestCoursesDependOnDepartments(studentId);
 
-        return Ok($"{message} {string.Join(", ", suggestedCourses)}");
+        return Ok($"{message}: {string.Join(", ", suggestedCourses)}");
     }
 
     [HttpDelete("DeleteStudent/{id}")]
