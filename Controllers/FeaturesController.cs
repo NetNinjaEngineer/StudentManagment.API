@@ -69,9 +69,13 @@ public class FeaturesController(IFeatureService featureService,
                 "can not enroll the course, try again !!!");
 
         // check count of courses enrolled for this student
-        //if (await _featureService.GetEnrollmentsCount(studentId) is null ||
-        //    await _featureService.GetEnrollmentsCount(studentId) >= 6)
-        //    return BadRequest("Invalid student or you exceeded allowed courses for enrollment");
+        //var exceededCourses = (
+        //    _featureService.GetEnrollmentsCount(studentId).Result.HasValue &&
+        //    _featureService.GetEnrollmentsCount(studentId).Result!.Value == 6
+        //    ) ? BadRequest("You Exceeded The Limit of courses") : null;
+
+        //if (exceededCourses is not null)
+        //    return exceededCourses;
 
         // case2 student does not register course if already register PreRequest course
         var (taken, course) = await _featureService.CheckPreRequestCourse(courseId, studentId);
@@ -95,7 +99,7 @@ public class FeaturesController(IFeatureService featureService,
     {
         var totalGPA = await _featureService.CalculateTotalGPA(studentId);
 
-        if (totalGPA == 0.0m)
+        if (totalGPA is null)
             return BadRequest("GPA is Un available");
 
         return Ok(totalGPA);
