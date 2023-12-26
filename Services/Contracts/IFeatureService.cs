@@ -1,5 +1,4 @@
-﻿using StudentManagement.API.Dtos;
-using StudentManagement.API.Entities;
+﻿using StudentManagement.API.Entities;
 using StudentManagement.API.Helpers;
 
 namespace StudentManagement.API.Services.Contracts;
@@ -25,7 +24,7 @@ public interface IFeatureService
 
     Task<IEnumerable<CoursesWithDepartmentsModel>> GetCoursesWithDepartments();
 
-    Task<decimal> CalculateTotalGPA(int studentId);
+    Task<decimal?> CalculateTotalGPA(int studentId);
 
     Task<Enrollment> UpdateEnrollment(Enrollment enrollment);
 
@@ -37,8 +36,10 @@ public interface IFeatureService
 
     Task<Student> GetStudentById(int studentId);
 
-    Task<IQueryable<EnrolledCourseDTO>> GetEnrolledCoursesFor(int studentId);
+    Task<IQueryable<string>> GetEnrolledCoursesFor(int studentId);
 
     Task<IEnumerable<Enrollment>> GetEnrollmentsBy(int studentId);
+
+    Task<int?> GetEnrollmentsCount(int studentId);
 
 }

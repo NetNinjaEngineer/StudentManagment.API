@@ -30,7 +30,7 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
 
     }
 
-    public Task<decimal> CalculateTotalGPA(int studentId)
+    public Task<decimal?> CalculateTotalGPA(int studentId)
     {
         decimal totalCreditHours = 0;
         decimal totalGradePoints = 0;
@@ -58,10 +58,10 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
 
             decimal? gpa = totalCreditHours > 0 ? totalGradePoints / totalCreditHours : 0;
 
-            return Task.FromResult(Math.Round(gpa.Value, 1));
+            return Task.FromResult((decimal?)Math.Round(gpa.Value, 1));
         }
         else
-            return Task.FromResult(0.0m);
+            return Task.FromResult(default(decimal?));
     }
 
     private decimal CalculateRatePoint(int? studentMark)
@@ -211,6 +211,8 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
 
             else if (totalGPA == 0.0m)
                 return ValueTuple.Create($"There is no suggested courses yet, GPA is un available", Enumerable.Empty<string>());
+            else
+                return ValueTuple.Create($"GPA is not in allowed ranges to suggest courses", Enumerable.Empty<string>());
         }
 
         return ValueTuple.Create($"Student may be not exist or not enrolled", Enumerable.Empty<string>());
@@ -279,11 +281,11 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
         return Task.FromResult(Enumerable.Empty<Enrollment>());
     }
 
-    public async Task<IQueryable<EnrolledCourseDTO>> GetEnrolledCoursesFor(int studentId)
+    public async Task<IQueryable<string>> GetEnrolledCoursesFor(int studentId)
     {
         var validStudent = await GetStudentById(studentId);
         if (validStudent == null)
-            return Enumerable.Empty<EnrolledCourseDTO>().AsQueryable();
+            return Enumerable.Empty<string>().AsQueryable();
 
         var enrolledCourses = _context.Courses
             .Join(_context.Departments,
@@ -310,7 +312,17 @@ public class FeatureService(ApplicationDbContext context) : IFeatureService
                 });
 
 
-        return enrolledCourses;
+        return enrolledCourses.Select(x => x.Courses!);
 
+    }
+
+    public async Task<int?> GetEnrollmentsCount(int studentId)
+    {
+        var existStudent = await GetStudentById(studentId);
+        if (existStudent is null)
+            return null;
+
+        var enrolledCoursesCount = _context.Enrollments.Count(e => e.StudentId == studentId);
+        return enrolledCoursesCount;
     }
 }

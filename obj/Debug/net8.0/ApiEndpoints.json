@@ -18,9 +18,9 @@
         "IsRequired": true
       },
       {
-        "Name": "dto",
-        "Type": "StudentManagement.API.Dtos.EnrollementDTO",
-        "IsRequired": true
+        "Name": "studentMark",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

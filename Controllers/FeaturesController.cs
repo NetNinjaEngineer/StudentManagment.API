@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using StudentManagement.API.Data;
-using StudentManagement.API.Dtos;
 using StudentManagement.API.Entities;
 using StudentManagement.API.Services.Contracts;
 
@@ -9,11 +7,10 @@ namespace StudentManagement.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class FeaturesController(IFeatureService featureService,
-    IMapper mapper, ApplicationDbContext context) : ControllerBase
+    IMapper mapper) : ControllerBase
 {
     private readonly IFeatureService _featureService = featureService;
     private readonly IMapper _mapper = mapper;
-    private readonly ApplicationDbContext _context = context;
 
     [Route("GetStudentsWithCoursesRegistered")]
     [HttpGet]
@@ -71,6 +68,11 @@ public class FeaturesController(IFeatureService featureService,
             return BadRequest("Not valid course or student, " +
                 "can not enroll the course, try again !!!");
 
+        // check count of courses enrolled for this student
+        //if (await _featureService.GetEnrollmentsCount(studentId) is null ||
+        //    await _featureService.GetEnrollmentsCount(studentId) >= 6)
+        //    return BadRequest("Invalid student or you exceeded allowed courses for enrollment");
+
         // case2 student does not register course if already register PreRequest course
         var (taken, course) = await _featureService.CheckPreRequestCourse(courseId, studentId);
 
@@ -101,17 +103,17 @@ public class FeaturesController(IFeatureService featureService,
 
     [HttpPut("{studentId}/{courseId}")]
     public async Task<IActionResult> UpdateEnrollementAsync(int studentId, int courseId,
-         [FromBody] EnrollementDTO dto)
+         int studentMark)
     {
         var existingEnrollement = await _featureService.GetEnrollmentById(studentId, courseId);
         if (existingEnrollement == null)
             return BadRequest("No enrollement founded !!!");
 
-        _mapper.Map(dto, existingEnrollement);
+        existingEnrollement.StudentMark = studentMark;
 
-        var updatedEnrollement = await _featureService.UpdateEnrollment(existingEnrollement);
+        await _featureService.UpdateEnrollment(existingEnrollement);
 
-        return Ok(updatedEnrollement);
+        return Ok("Enrollment updated successfully");
     }
 
     [HttpGet("SuggestCourses")]
